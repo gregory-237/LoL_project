@@ -37,12 +37,13 @@ class SampleApp(tk.Tk):
         self.btn_clear.grid(row=5, column=1, sticky='w')
 
     def save(self) -> None:
-        enemy_team['toplane'] = self.toplane.get()
-        enemy_team['midlane'] = self.midlane.get()
+        enemy_team['top'] = self.toplane.get()
+        enemy_team['mid'] = self.midlane.get()
         enemy_team['jungle'] = self.jungle.get()
         enemy_team['adc'] = self.adc.get()
-        enemy_team['support'] = self.support.get()
-        print(enemy_team)
+        enemy_team['sup'] = self.support.get()
+        self.btn_record = tk.Button(self, text="Начать считывание клавиш", command=self.record_audio)
+        self.btn_record.grid(row=6, column=1, sticky='w')
 
     def clear(self):
         self.toplane.delete(0, END)
@@ -50,9 +51,22 @@ class SampleApp(tk.Tk):
         self.jungle.delete(0, END)
         self.adc.delete(0, END)
         self.support.delete(0, END)
+        self.btn_record.destroy()
+        self.btn_stop_record.destroy()
+
+    def record_audio(self):
+        self.btn_record.destroy()
+        self.btn_stop_record = tk.Button(self, text="Остановить программу", command=self.stop_record_audio)
+        self.btn_stop_record.grid(row=6, column=1, sticky='w')
+
+    def stop_record_audio(self):
+        self.btn_stop_record.destroy()
+        self.btn_record = tk.Button(self, text="Начать считывание клавиш", command=self.record_audio)
+        self.btn_record.grid(row=6, column=1, sticky='w')
 
 
-app = SampleApp()
-app.title('LoL_ADC_helper')
-app.geometry("400x250")
-app.mainloop()
+if __name__ == "__main__":
+    app = SampleApp()
+    app.title('LoL_ADC_helper')
+    app.geometry("400x250")
+    app.mainloop()
